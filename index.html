@@ -1,1 +1,456 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & META -->
+    <title>El Avileño | Dayi y Su Sazón 100% Cubano</title>
+    <meta name="description" content="La mejor comida cubana en Beaumont Hwy. Sándwiches, Congrí y el sazón único de Dayi. ¡Te esperamos en Houston!">
 
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Lobster (Estilo Logo) y Poppins (Moderno) -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Lobster', 'cursive'],
+                    },
+                    colors: {
+                        'avila-blue': '#1565C0',   /* Azul del Logo */
+                        'avila-red': '#D32F2F',    /* Rojo Cubano */
+                        'avila-light': '#F5F5F5',
+                        'avila-dark': '#0D47A1',
+                    },
+                    boxShadow: {
+                        'card': '0 10px 30px -5px rgba(21, 101, 192, 0.2)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fondo Hero: Imagen del Food Truck */
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(21, 101, 192, 0.8), rgba(13, 71, 161, 0.6)), url('https://raw.githubusercontent.com/Enviado98/elavileno/main/fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Azulado */
+        .glass-blue {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 4px solid #1565C0;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+
+        /* Acordeón */
+        .accordion-content {
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botón Estilo Béisbol (Clásico Cubano) */
+        .btn-baseball {
+            background-color: white;
+            color: #1565C0;
+            border: 2px solid #1565C0;
+            transition: all 0.3s;
+        }
+        .btn-baseball:hover {
+            background-color: #1565C0;
+            color: white;
+            box-shadow: 0 5px 15px rgba(21, 101, 192, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-avila-light text-gray-800 antialiased selection:bg-avila-blue selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 top-0 bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100 py-3">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-avila-blue text-white rounded-full flex items-center justify-center shadow-md group-hover:bg-avila-red transition-colors">
+                    <span class="font-display text-xl pt-1">A</span>
+                </div>
+                <div class="leading-none">
+                    <h1 class="font-display text-2xl text-avila-blue tracking-wide group-hover:text-avila-red transition-colors">El Avileño</h1>
+                </div>
+            </a>
+
+            <!-- Botones -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-full text-xs font-bold text-gray-500 hover:border-avila-blue hover:text-avila-blue transition-colors">
+                    <i class="ph-bold ph-globe"></i> <span id="lang-text">ES</span>
+                </button>
+                
+                <a href="tel:+13463218877" class="bg-avila-red hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold shadow-lg transition-all flex items-center gap-2 text-sm transform hover:-translate-y-0.5">
+                    <i class="ph-bold ph-phone"></i> 
+                    <span class="lang" data-es="Llamar" data-en="Call Now">Llamar</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-bg min-h-screen flex items-center justify-center relative pt-24 pb-20">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            
+            <!-- Texto Principal -->
+            <div class="text-center lg:text-left reveal active">
+                <div class="inline-flex items-center gap-2 bg-white text-avila-blue px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 shadow-lg border border-avila-blue/20">
+                    <i class="ph-fill ph-cooking-pot text-avila-red"></i> Dayi y Su Sazón
+                </div>
+                
+                <h1 class="font-display text-6xl md:text-8xl text-white mb-4 drop-shadow-xl transform -rotate-2">
+                    El Avileño
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-yellow-400 font-sans font-bold mb-6">
+                    100% Cubano
+                </h2>
+                
+                <p class="text-lg text-gray-100 mb-8 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0 lang" 
+                   data-es="Desde Ciego de Ávila hasta Houston. Disfruta de la mejor comida casera, sándwiches y tamales con el toque especial de Dayi."
+                   data-en="From Ciego de Ávila to Houston. Enjoy the best homemade food, sandwiches, and tamales with Dayi's special touch.">
+                   Desde Ciego de Ávila hasta Houston. Disfruta de la mejor comida casera, sándwiches y tamales con el toque especial de Dayi.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#menu" class="bg-white text-avila-blue px-8 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center justify-center gap-2 hover:bg-avila-light">
+                        <i class="ph-bold ph-fork-knife"></i> <span class="lang" data-es="Ver Menú" data-en="View Menu">Ver Menú</span>
+                    </a>
+                    
+                    <a href="https://maps.app.goo.gl/RQJQ+F2" target="_blank" class="border-2 border-white text-white hover:bg-white/20 px-8 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
+                        <i class="ph-bold ph-navigation-arrow"></i> <span class="lang" data-es="Cómo Llegar" data-en="Get Directions">Cómo Llegar</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PANEL DE HORARIOS -->
+            <div class="relative z-10 reveal active delay-100 w-full max-w-md mx-auto">
+                <div class="glass-blue rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                    <!-- Cabecera Clickable -->
+                    <div class="bg-gray-50 p-6 flex items-center justify-between cursor-pointer hover:bg-gray-100 transition-colors border-b border-gray-200" onclick="toggleHours()">
+                        <div class="flex items-center gap-4">
+                            <!-- Indicador Luz -->
+                            <div class="relative">
+                                <div id="status-light" class="w-4 h-4 rounded-full bg-gray-300 ring-4 ring-gray-100"></div>
+                                <div id="status-ping" class="absolute top-0 left-0 w-4 h-4 rounded-full bg-gray-300 animate-ping opacity-75 hidden"></div>
+                            </div>
+                            <div>
+                                <h3 id="status-text" class="font-display text-xl text-avila-dark">...</h3>
+                                <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase lang" data-es="Estado Actual" data-en="Current Status">Estado Actual</p>
+                            </div>
+                        </div>
+                        <div class="bg-avila-blue/10 p-2 rounded-full text-avila-blue">
+                            <i id="chevron" class="ph-bold ph-caret-down text-xl transition-transform duration-300"></i>
+                        </div>
+                    </div>
+
+                    <!-- Lista Desplegable -->
+                    <div id="hours-list" class="accordion-content bg-white text-gray-700">
+                        <div class="p-6 space-y-3 font-sans text-sm">
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="font-bold text-gray-600 lang" data-es="Lunes - Sábado" data-en="Mon - Sat">Lunes - Sábado</span>
+                                <div class="text-right">
+                                    <span class="block font-bold text-avila-blue text-lg">08:00 - 17:00</span>
+                                    <span class="text-[10px] text-gray-400 block lang" data-es="Desayuno y Almuerzo" data-en="Breakfast & Lunch">Desayuno y Almuerzo</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center bg-red-50 p-2 rounded-lg">
+                                <span class="font-bold text-avila-red lang" data-es="Domingo" data-en="Sunday">Domingo</span>
+                                <span class="text-xs font-bold border border-avila-red text-avila-red px-2 py-0.5 rounded uppercase">Cerrado</span>
+                            </div>
+                            
+                            <div class="mt-4 pt-2 text-center">
+                                <a href="https://maps.app.goo.gl/RQJQ+F2" target="_blank" class="text-xs font-bold text-avila-blue hover:text-avila-red flex items-center justify-center gap-1 uppercase tracking-widest transition-colors">
+                                    <i class="ph-fill ph-map-pin text-avila-red"></i> 12430 Beaumont Hwy, Houston
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENÚ -->
+    <section id="menu" class="py-24 relative bg-gray-50">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-avila-red font-bold tracking-widest uppercase text-sm mb-2 block font-sans lang" data-es="Sazón Casero" data-en="Homemade Seasoning">Sazón Casero</span>
+                <h2 class="font-display text-5xl font-bold text-avila-dark mb-2">
+                    <span class="lang" data-es="Platos Destacados" data-en="Featured Dishes">Platos Destacados</span>
+                </h2>
+                <div class="w-20 h-1.5 bg-avila-blue mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <!-- 1. PLATO DE LA CASA (Comida 1) -->
+                <div class="bg-white rounded-2xl p-0 shadow-card hover:shadow-2xl transition-all duration-300 group reveal overflow-hidden">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute top-3 left-3 bg-avila-blue text-white font-bold px-3 py-1 rounded text-xs shadow-md z-10 font-sans">Completo</div>
+                        <img src="https://raw.githubusercontent.com/Enviado98/elavileno/main/comida1.jpg" alt="Plato Fuerte" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sans font-bold text-xl text-gray-900">Fricasé con Congrí</h3>
+                            <span class="text-gray-400 font-bold">$--</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4 leading-relaxed lang" data-es="Abundante carne en salsa, arroz congrí, yuca con mojo y tostones. El verdadero almuerzo cubano." data-en="Abundant meat in sauce, congri rice, yuca with mojo, and tostones. The real Cuban lunch.">Abundante carne en salsa, arroz congrí, yuca con mojo y tostones. El verdadero almuerzo cubano.</p>
+                        <button class="w-full py-2 rounded-lg border-2 border-avila-blue text-avila-blue font-bold hover:bg-avila-blue hover:text-white transition-colors text-xs uppercase tracking-wide">Ordenar</button>
+                    </div>
+                </div>
+
+                <!-- 2. SÁNDWICH CUBANO (Comida 2) -->
+                <div class="bg-white rounded-2xl p-0 shadow-card hover:shadow-2xl transition-all duration-300 group reveal delay-100 overflow-hidden border-t-4 border-avila-red">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute top-3 left-3 bg-avila-red text-white font-bold px-3 py-1 rounded text-xs shadow-md z-10 font-sans">Favorito</div>
+                        <img src="https://raw.githubusercontent.com/Enviado98/elavileno/main/comida2.jpg" alt="Sandwich" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sans font-bold text-xl text-gray-900">Sándwich Cubano</h3>
+                            <span class="text-gray-400 font-bold">$--</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4 leading-relaxed lang" data-es="Pan tostado, cerdo asado, jamón, queso suizo y pepinillos. ¡Crujiente y delicioso!" data-en="Toasted bread, roast pork, ham, Swiss cheese, and pickles. Crunchy and delicious!">Pan tostado, cerdo asado, jamón, queso suizo y pepinillos. ¡Crujiente y delicioso!</p>
+                        <button class="w-full py-2 rounded-lg bg-avila-red text-white font-bold hover:bg-red-800 transition-colors text-xs uppercase tracking-wide">Ordenar</button>
+                    </div>
+                </div>
+
+                <!-- 3. YUCA CON MOJO (Comida 3) -->
+                <div class="bg-white rounded-2xl p-0 shadow-card hover:shadow-2xl transition-all duration-300 group reveal delay-200 overflow-hidden">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://raw.githubusercontent.com/Enviado98/elavileno/main/comida3.jpg" alt="Yuca" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-sans font-bold text-xl text-gray-900">Yuca con Mojo</h3>
+                            <span class="text-gray-400 font-bold">$--</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4 leading-relaxed lang" data-es="Yuca blanda bañada en nuestro mojo criollo especial con mucha cebolla." data-en="Soft yuca bathed in our special creole mojo with plenty of onions.">Yuca blanda bañada en nuestro mojo criollo especial con mucha cebolla.</p>
+                        <button class="w-full py-2 rounded-lg border-2 border-avila-blue text-avila-blue font-bold hover:bg-avila-blue hover:text-white transition-colors text-xs uppercase tracking-wide">Ordenar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-avila-dark text-white pt-16 pb-12 border-t-4 border-avila-blue">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            
+            <div class="text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                    <div class="bg-white text-avila-blue p-1 rounded">
+                        <span class="font-display text-xl">A</span>
+                    </div>
+                    <h3 class="font-display text-3xl font-bold text-white">El Avileño</h3>
+                </div>
+                
+                <div class="space-y-3 text-gray-300 font-medium font-sans">
+                    <a href="https://maps.app.goo.gl/RQJQ+F2" target="_blank" class="flex items-center justify-center md:justify-start gap-2 hover:text-white transition-colors">
+                        <i class="ph-fill ph-map-pin text-avila-red"></i>
+                        12430 Beaumont Hwy, Houston, TX 77049
+                    </a>
+                    <a href="tel:+13463218877" class="flex items-center justify-center md:justify-start gap-2 hover:text-white transition-colors">
+                        <i class="ph-fill ph-phone text-avila-blue"></i>
+                        +1 (346) 321-8877
+                    </a>
+                    <div class="flex items-center justify-center md:justify-start gap-2">
+                        <i class="ph-fill ph-clock text-gray-500"></i>
+                        <span class="lang" data-es="Lunes a Sábado: 08:00 - 17:00" data-en="Mon-Sat: 08:00 - 17:00">Lunes a Sábado: 08:00 - 17:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa Estático -->
+            <div class="rounded-3xl overflow-hidden h-64 border-4 border-white/10 relative shadow-lg grayscale hover:grayscale-0 transition-all duration-500">
+                 <iframe 
+                    src="https://maps.google.com/maps?q=12430+Beaumont+Hwy,+Houston,+TX+77049&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                 </iframe>
+            </div>
+
+        </div>
+        <div class="text-center mt-12 text-xs text-gray-500 font-bold font-sans uppercase tracking-widest">
+            &copy; 2026 El Avileño. Houston, USA.
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4 items-end">
+        
+        <!-- Botón Llamar (Solo Móvil) -->
+        <a href="tel:+13463218877" class="md:hidden w-14 h-14 bg-white text-avila-blue rounded-full shadow-lg flex items-center justify-center border-2 border-avila-red hover:scale-110 transition-transform duration-300">
+            <i class="ph-fill ph-phone-call text-2xl animate-pulse text-avila-red"></i>
+        </a>
+
+        <!-- Botón WhatsApp (Principal) -->
+        <a href="https://wa.me/13463218877?text=Hola%20El%20Avileño,%20quiero%20hacer%20un%20pedido." target="_blank" class="group relative w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 hover:shadow-[0_10px_30px_rgba(37,211,102,0.4)] border-4 border-white">
+            <i class="ph-fill ph-whatsapp-logo text-3xl"></i>
+            
+            <!-- Tooltip -->
+            <span class="absolute right-full mr-3 bg-avila-blue text-white px-4 py-2 rounded-2xl text-xs font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden md:block border border-white font-sans uppercase tracking-wide">
+                <span class="lang" data-es="¡Haz tu pedido!" data-en="Place your order!">¡Haz tu pedido!</span>
+            </span>
+        </a>
+    </div>
+
+    <!-- LÓGICA -->
+    <script>
+        // 1. SCROLL REVEAL
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // 2. TOGGLE HORARIOS
+        function toggleHours() {
+            const list = document.getElementById('hours-list');
+            const chevron = document.getElementById('chevron');
+            list.classList.toggle('active');
+            
+            if (list.classList.contains('active')) {
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // 3. LOGICA HORARIOS (Lunes-Sábado 08:00-17:00, Domingo Cerrado)
+        function checkStatus() {
+            try {
+                // Zona Horaria Texas: America/Chicago
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Chicago',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    weekday: 'short',
+                    hour12: false
+                });
+
+                const parts = formatter.formatToParts(now);
+                const hour = parseInt(parts.find(p => p.type === 'hour').value);
+                const minute = parseInt(parts.find(p => p.type === 'minute').value);
+                const day = parts.find(p => p.type === 'weekday').value; 
+                const currentTime = hour + (minute / 60);
+
+                let isOpen = false;
+
+                // Domingo: Cerrado
+                if (day === 'Sun') {
+                    isOpen = false;
+                }
+                // Lunes a Sábado: 08:00 - 17:00
+                else {
+                    if (currentTime >= 8 && currentTime < 17) {
+                        isOpen = true;
+                    }
+                }
+
+                const lang = document.getElementById('lang-text').innerText;
+                const light = document.getElementById('status-light');
+                const ping = document.getElementById('status-ping');
+                const text = document.getElementById('status-text');
+
+                if (isOpen) {
+                    light.className = "w-4 h-4 rounded-full bg-green-500 ring-4 ring-green-100 shadow-lg";
+                    ping.classList.remove('hidden');
+                    text.innerText = lang === 'ES' ? "ABIERTO" : "OPEN";
+                    text.className = "font-display text-xl text-green-600 tracking-wide";
+                } else {
+                    light.className = "w-4 h-4 rounded-full bg-avila-red ring-4 ring-red-100 shadow-lg";
+                    ping.classList.add('hidden');
+                    text.innerText = lang === 'ES' ? "CERRADO" : "CLOSED";
+                    text.className = "font-display text-xl text-avila-red tracking-wide";
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // 4. IDIOMA
+        function toggleLanguage() {
+            const btn = document.getElementById('lang-text');
+            const isSpanish = btn.innerText === 'ES';
+            const target = isSpanish ? 'en' : 'es';
+            
+            btn.innerText = isSpanish ? 'EN' : 'ES';
+
+            document.querySelectorAll('.lang').forEach(el => {
+                if (el.dataset[target]) {
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.innerText = el.dataset[target];
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+            setTimeout(checkStatus, 200);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            reveal();
+            checkStatus();
+        });
+        
+        setInterval(checkStatus, 60000);
+    </script>
+</body>
+</html>
